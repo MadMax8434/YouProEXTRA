@@ -1,4 +1,4 @@
-name: Build YTKillerPlus IPA
+name: Build YTKiller IPA
 on:
   workflow_dispatch:
     inputs:
