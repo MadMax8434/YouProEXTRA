@@ -105,17 +105,17 @@ concurrency:
 jobs:
   build:
     name: Build YTKillerPlus IPA
-    runs-on: macos-latest
+    runs-on: macos-15
     permissions:
       contents: write
     env:
       HOMEBREW_NO_ENV_HINTS: 1
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7
 
       - name: Hide Sensitive Inputs
-        uses: levibostian/action-hide-sensitive-inputs@1.2.0
+        uses: levibostian/action-hide-sensitive-inputs@v1
         with:
           exclude_inputs: bundle_id,display_name,youpip,ytuhd,ryd,ytabconfig,youquality,gonerino,yougetcaption,demc,youchoose,ythold,volumeboost,nativeshare,opensafari
 
@@ -144,7 +144,10 @@ jobs:
           nativeshare: ${{ inputs.nativeshare }}
 
       - name: Install Dependencies
-        run: brew install --quiet make ldid swiftlint dpkg meson ninja
+        run: |
+          brew uninstall --ignore-dependencies bicep || true
+          brew untap aws/tap azure/bicep || true
+          brew install --quiet make ldid swiftlint dpkg meson ninja
 
       - name: Set PATH Environment Variables
         run: |
@@ -239,7 +242,7 @@ jobs:
 
       - name: Clone and Build YTKillerPlus
         run: |
-          git clone --quiet --depth=1 https://github.com/mrdrvt99/YTKP.git
+          git clone --quiet --depth=1 https://git.0x0.st/mrdrvt99/YTKP.git
           cd YTKP
           echo "YTKP_VERSION=$(grep '^Version:' DEBIAN/control | awk '{print $2}')" >> $GITHUB_ENV
           chmod -R 755 .
