@@ -1,0 +1,13 @@
+name: Mon Premier Workflow
+
+on: [push] # Déclenche le workflow à chaque fois que vous envoyez du code
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code
+        uses: actions/checkout@v4
+
+      - name: Exécuter une commande
+        run: echo "Le workflow fonctionne !"
